@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Canudent — Clínica dental</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Varela+Round&family=Nunito:ital,wght@0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --accent: #2E7DD1;
+    --accent-deep: #2666AB;
+    --accent-soft: #EAF2FB;
+    --accent-tint: #F5F9FD;
+    --ink: #0F2A3F;
+    --muted: #5C7383;
+    --line: #E7EEF1;
+    --radius: 22px;
+    --maxw: 1200px;
+    --head-font: 'Varela Round', system-ui, sans-serif;
+    --body-font: 'Nunito', system-ui, sans-serif;
+  }
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    font-family:var(--body-font);
+    color:var(--ink);
+    background:#fff;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+  h1,h2,h3,h4{ font-family:var(--head-font); font-weight:600; line-height:1.08; margin:0; letter-spacing:-0.01em; }
+  a{ color:inherit; text-decoration:none; }
+  img{ display:block; max-width:100%; }
+  .wrap{ width:100%; max-width:var(--maxw); margin:0 auto; padding:0 28px; }
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; gap:9px;
+    font-family:var(--head-font); font-weight:500; font-size:1.02rem;
+    padding:14px 26px; border-radius:999px; cursor:pointer; border:none;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{ background:var(--accent); color:#fff; box-shadow:0 10px 24px -8px color-mix(in srgb, var(--accent) 70%, transparent); }
+  .btn-primary:hover{ background:var(--accent-deep); transform:translateY(-2px); box-shadow:0 16px 30px -10px color-mix(in srgb, var(--accent) 70%, transparent); }
+  .btn-ghost{ background:#fff; color:var(--ink); border:1.5px solid var(--line); }
+  .btn-ghost:hover{ border-color:var(--accent); color:var(--accent); transform:translateY(-2px); }
+  .btn-lg{ padding:17px 32px; font-size:1.08rem; }
+
+  /* ---------- Navbar ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:color-mix(in srgb, #fff 88%, transparent);
+    backdrop-filter:saturate(160%) blur(14px);
+    transition:box-shadow .25s ease, background .25s ease;
+  }
+  header.nav.scrolled{ box-shadow:0 6px 24px -14px rgba(15,42,63,.28); background:rgba(255,255,255,.94); }
+  .nav-inner{ display:flex; align-items:center; gap:36px; height:78px; }
+  .logo img{ height:34px; }
+  .nav-links{ display:flex; align-items:center; gap:34px; margin-left:8px; }
+  .nav-links a{
+    font-weight:700; font-size:.98rem; color:var(--ink); position:relative; padding:6px 0;
+    transition:color .15s ease;
+  }
+  .nav-links a::after{
+    content:""; position:absolute; left:0; bottom:-2px; height:2px; width:0; border-radius:2px;
+    background:var(--accent); transition:width .22s ease;
+  }
+  .nav-links a:hover{ color:var(--accent); }
+  .nav-links a:hover::after{ width:100%; }
+  .nav-right{ margin-left:auto; display:flex; align-items:center; gap:18px; }
+  .nav-phone{ display:flex; align-items:center; gap:8px; font-weight:700; font-size:.96rem; color:var(--ink); }
+  .nav-phone i{ color:var(--accent); }
+  .nav-phone:hover{ color:var(--accent); }
+  .menu-btn{ display:none; background:none; border:none; cursor:pointer; color:var(--ink); }
+
+  /* ---------- Hero ---------- */
+  .hero{ position:relative; overflow:hidden; }
+  .hero-bg{ position:absolute; inset:0; pointer-events:none; z-index:0; }
+  .blob{ position:absolute; border-radius:50%; filter:blur(8px); opacity:.55; }
+  .blob.b1{ width:560px; height:560px; right:-160px; top:-180px;
+    background:radial-gradient(circle at 30% 30%, var(--accent-soft), transparent 70%); opacity:1; filter:none; }
+  .blob.b2{ width:420px; height:420px; left:-180px; bottom:-160px;
+    background:radial-gradient(circle at 50% 50%, color-mix(in srgb,var(--accent) 14%, #fff), transparent 72%); }
+  .hero-inner{
+    position:relative; z-index:1;
+    display:grid; grid-template-columns:1.05fr .95fr; gap:60px; align-items:center;
+    padding:78px 0 96px;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    background:var(--accent-soft); color:var(--accent-deep);
+    font-family:var(--head-font); font-weight:500; font-size:.92rem;
+    padding:8px 16px; border-radius:999px; margin-bottom:24px;
+  }
+  .eyebrow i{ width:16px; height:16px; }
+  .hero h1{ font-size:clamp(2.6rem, 4.6vw, 4rem); font-weight:600; }
+  .hero h1 .hl{ color:var(--accent); position:relative; white-space:nowrap; }
+  .hero h1 .hl svg{ position:absolute; left:0; right:0; bottom:-12px; width:100%; height:14px; }
+  .hero p.lead{ font-size:1.22rem; color:var(--muted); max-width:35ch; margin:26px 0 36px; font-weight:500; }
+  .hero-cta{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+  .trust{ display:flex; align-items:center; gap:14px; margin-top:34px; }
+  .stars{ display:flex; gap:2px; color:#F5B301; }
+  .stars i, .stars svg{ width:18px; height:18px; fill:#F5B301; stroke:#F5B301; }
+  .trust-txt{ font-size:.98rem; color:var(--muted); font-weight:600; }
+  .trust-txt b{ color:var(--ink); }
+
+  /* hero media */
+  .hero-media{ position:relative; }
+  .hero-photo{
+    width:100%; aspect-ratio:4/5; border-radius:42px 42px 42px 120px;
+    box-shadow:0 40px 80px -36px rgba(15,42,63,.42);
+    overflow:hidden;
+  }
+  .hero-media .watermark{ position:absolute; width:200px; right:-44px; top:-46px; opacity:.10; z-index:-1; rotate:8deg; }
+  .float-card{
+    position:absolute; background:#fff; border-radius:18px;
+    box-shadow:0 20px 44px -18px rgba(15,42,63,.30);
+    display:flex; align-items:center; gap:12px; padding:14px 18px;
+  }
+  .float-card .ic{ width:42px; height:42px; border-radius:12px; display:grid; place-items:center; background:var(--accent-soft); color:var(--accent-deep); flex:none; }
+  .float-card .ic i{ width:22px; height:22px; }
+  .float-card .t1{ font-family:var(--head-font); font-weight:600; font-size:1rem; line-height:1.1; }
+  .float-card .t2{ font-size:.82rem; color:var(--muted); font-weight:600; }
+  .fc-open{ left:-34px; bottom:54px; }
+  .fc-rate{ right:-26px; top:40px; }
+  .fc-rate .big{ font-family:var(--head-font); font-weight:600; font-size:1.5rem; }
+
+  /* ---------- Services ---------- */
+  .services{ padding:96px 0 40px; }
+  .sec-head{ text-align:center; max-width:620px; margin:0 auto 56px; }
+  .kicker{ font-family:var(--head-font); font-weight:600; color:var(--accent); letter-spacing:.08em; text-transform:uppercase; font-size:.86rem; }
+  .sec-head h2{ font-size:clamp(2rem,3.4vw,2.9rem); margin:14px 0 16px; }
+  .sec-head p{ color:var(--muted); font-size:1.12rem; font-weight:500; margin:0; }
+  .cards{ display:grid; grid-template-columns:repeat(3,1fr); gap:26px; }
+  .card{
+    background:#fff; border:1px solid var(--line); border-radius:var(--radius);
+    padding:38px 34px 32px; transition:transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+    position:relative; overflow:hidden;
+  }
+  .card::before{
+    content:""; position:absolute; inset:0 0 auto 0; height:5px;
+    background:linear-gradient(90deg,var(--accent),color-mix(in srgb,var(--accent) 40%,#fff));
+    transform:scaleX(0); transform-origin:left; transition:transform .3s ease;
+  }
+  .card:hover{ transform:translateY(-8px); box-shadow:0 30px 60px -28px rgba(15,42,63,.28); border-color:transparent; }
+  .card:hover::before{ transform:scaleX(1); }
+  .card-ic{
+    width:64px; height:64px; border-radius:20px; display:grid; place-items:center;
+    background:var(--accent-soft); color:var(--accent-deep); margin-bottom:24px;
+    transition:background .22s ease, color .22s ease;
+  }
+  .card-ic i{ width:32px; height:32px; }
+  .card:hover .card-ic{ background:var(--accent); color:#fff; }
+  .card h3{ font-size:1.5rem; margin-bottom:12px; }
+  .card p{ color:var(--muted); font-weight:500; margin:0 0 22px; }
+  .card-link{ font-family:var(--head-font); font-weight:600; color:var(--accent-deep); display:inline-flex; align-items:center; gap:7px; }
+  .card-link i{ width:18px; height:18px; transition:transform .2s ease; }
+  .card:hover .card-link i{ transform:translateX(4px); }
+
+  /* ---------- CTA band ---------- */
+  .ctaband{ padding:90px 0; }
+  .ctaband-inner{
+    background:linear-gradient(135deg,var(--accent),var(--accent-deep));
+    border-radius:40px; padding:64px 56px; color:#fff; position:relative; overflow:hidden;
+    display:flex; align-items:center; justify-content:space-between; gap:40px; flex-wrap:wrap;
+  }
+  .ctaband-inner .glow{ position:absolute; width:380px; height:380px; border-radius:50%;
+    background:radial-gradient(circle,rgba(255,255,255,.18),transparent 70%); right:-80px; top:-120px; }
+  .ctaband h2{ font-size:clamp(1.9rem,3vw,2.6rem); color:#fff; max-width:18ch; position:relative; }
+  .ctaband p{ color:rgba(255,255,255,.85); font-weight:500; margin:14px 0 0; position:relative; font-size:1.08rem; }
+  .ctaband .btn-white{ background:#fff; color:var(--accent-deep); position:relative; }
+  .ctaband .btn-white:hover{ transform:translateY(-2px); box-shadow:0 16px 30px -10px rgba(0,0,0,.3); }
+
+  /* ---------- Footer ---------- */
+  footer{ background:var(--ink); color:rgba(255,255,255,.7); padding:60px 0 36px; }
+  .foot-top{ display:flex; justify-content:space-between; gap:48px; flex-wrap:wrap; padding-bottom:40px; border-bottom:1px solid rgba(255,255,255,.12); }
+  .foot-brand img{ height:34px; margin-bottom:18px; }
+  .foot-brand p{ max-width:30ch; font-weight:500; font-size:.96rem; margin:0; }
+  .foot-cols{ display:flex; gap:64px; flex-wrap:wrap; }
+  .foot-col h4{ font-family:var(--head-font); font-weight:600; color:#fff; font-size:1rem; margin-bottom:16px; }
+  .foot-col a{ display:block; font-weight:600; font-size:.94rem; margin-bottom:11px; color:rgba(255,255,255,.7); transition:color .15s; }
+  .foot-col a:hover{ color:#fff; }
+  .foot-bottom{ display:flex; justify-content:space-between; align-items:center; gap:16px; flex-wrap:wrap; padding-top:26px; font-size:.88rem; font-weight:600; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:960px){
+    .nav-links, .nav-phone{ display:none; }
+    .menu-btn{ display:grid; }
+    .hero-inner{ grid-template-columns:1fr; gap:48px; padding:56px 0 72px; }
+    .hero-media{ max-width:440px; margin:0 auto; width:100%; }
+    .cards{ grid-template-columns:1fr; }
+  }
+  @media (max-width:560px){
+    .wrap{ padding:0 20px; }
+    .ctaband-inner{ padding:44px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <div class="wrap nav-inner">
+    <a class="logo" href="#" aria-label="Canudent inicio"><img src="assets/wordmark-navy.png" alt="Canudent" /></a>
+    <nav class="nav-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#equipo">Equipo</a>
+      <a href="#tarifas">Tarifas</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <div class="nav-right">
+      <a class="nav-phone" href="tel:+34910000000"><i data-lucide="phone"></i> 910 000 000</a>
+      <button class="btn btn-primary" id="navCta"><i data-lucide="calendar-check" style="width:18px;height:18px"></i> Pedir cita</button>
+      <button class="menu-btn" aria-label="Menú"><i data-lucide="menu" style="width:26px;height:26px"></i></button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+  </div>
+  <div class="wrap hero-inner">
+    <div class="hero-copy">
+      <span class="eyebrow"><i data-lucide="map-pin"></i> Clínica dental · Madrid</span>
+      <h1>Tu mejor <span class="hl">sonrisa<svg viewBox="0 0 300 14" preserveAspectRatio="none"><path d="M3 9 C 70 2, 230 2, 297 8" stroke="var(--accent)" stroke-width="5" fill="none" stroke-linecap="round" opacity=".4"/></svg></span> empieza aquí</h1>
+      <p class="lead">Odontología moderna y cercana, con la última tecnología. Cuidamos de ti y de toda tu familia en un espacio donde te sentirás como en casa.</p>
+      <div class="hero-cta">
+        <button class="btn btn-primary btn-lg"><i data-lucide="calendar-check" style="width:20px;height:20px"></i> Pedir cita</button>
+        <a class="btn btn-ghost btn-lg" href="#servicios"><i data-lucide="stethoscope" style="width:20px;height:20px"></i> Ver servicios</a>
+      </div>
+      <div class="trust">
+        <span class="stars"><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i><i data-lucide="star"></i></span>
+        <span class="trust-txt"><b>4,9 / 5</b> · más de 2.000 pacientes felices</span>
+      </div>
+    </div>
+    <div class="hero-media">
+      <img class="watermark" src="assets/mark-teal.png" alt="" aria-hidden="true" />
+      <image-slot id="hero-photo" class="hero-photo" shape="rounded" radius="42" placeholder="Foto de paciente sonriendo / clínica"></image-slot>
+      <div class="float-card fc-open">
+        <div class="ic"><i data-lucide="clock"></i></div>
+        <div>
+          <div class="t1">Abierto hoy</div>
+          <div class="t2">Lun–Sáb · 9:00–21:00</div>
+        </div>
+      </div>
+      <div class="float-card fc-rate">
+        <div class="ic"><i data-lucide="heart-handshake"></i></div>
+        <div>
+          <div class="big">+15 años</div>
+          <div class="t2">cuidando sonrisas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section class="services" id="servicios">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="kicker">Nuestros servicios</span>
+      <h2>Todo lo que tu sonrisa necesita</h2>
+      <p>Tratamientos a medida con materiales de primera calidad y un equipo que te explica cada paso con total transparencia.</p>
+    </div>
+    <div class="cards">
+      <article class="card">
+        <div class="card-ic"><i data-lucide="align-center-horizontal"></i></div>
+        <h3>Ortodoncia invisible</h3>
+        <p>Alinea tus dientes sin que nadie lo note, con férulas transparentes hechas a tu medida y revisiones cómodas.</p>
+        <a class="card-link" href="#">Saber más <i data-lucide="arrow-right"></i></a>
+      </article>
+      <article class="card">
+        <div class="card-ic"><i data-lucide="shield-check"></i></div>
+        <h3>Implantes dentales</h3>
+        <p>Recupera los dientes que faltan con implantes de titanio de alta calidad y resultados naturales y duraderos.</p>
+        <a class="card-link" href="#">Saber más <i data-lucide="arrow-right"></i></a>
+      </article>
+      <article class="card">
+        <div class="card-ic"><i data-lucide="sparkles"></i></div>
+        <h3>Estética dental</h3>
+        <p>Blanqueamiento y carillas para conseguir una sonrisa luminosa, armónica y completamente natural.</p>
+        <a class="card-link" href="#">Saber más <i data-lucide="arrow-right"></i></a>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA BAND ============ -->
+<section class="ctaband">
+  <div class="wrap">
+    <div class="ctaband-inner">
+      <div class="glow"></div>
+      <div>
+        <h2>¿Listo para sentirte orgulloso de tu sonrisa?</h2>
+        <p>Reserva tu primera visita y diagnóstico sin compromiso.</p>
+      </div>
+      <button class="btn btn-white btn-lg"><i data-lucide="calendar-check" style="width:20px;height:20px"></i> Reservar primera visita</button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer id="contacto">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <img src="uploads/wordmark-white.png" alt="Canudent" />
+        <p>Odontología moderna y cercana en el corazón de Madrid. Cuidamos de ti y de toda tu familia.</p>
+      </div>
+      <div class="foot-cols">
+        <div class="foot-col">
+          <h4>Servicios</h4>
+          <a href="#">Ortodoncia invisible</a>
+          <a href="#">Implantes dentales</a>
+          <a href="#">Estética dental</a>
+          <a href="#">Odontología general</a>
+        </div>
+        <div class="foot-col">
+          <h4>Clínica</h4>
+          <a href="#">Sobre nosotros</a>
+          <a href="#">Equipo</a>
+          <a href="#">Tarifas</a>
+          <a href="#">Blog</a>
+        </div>
+        <div class="foot-col">
+          <h4>Contacto</h4>
+          <a href="tel:+34910000000">910 000 000</a>
+          <a href="mailto:hola@canudent.es">hola@canudent.es</a>
+          <a href="#">Calle de la Sonrisa, 12<br/>28001 Madrid</a>
+        </div>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Canudent. Todos los derechos reservados.</span>
+      <span>Aviso legal · Privacidad · Cookies</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ TWEAKS MOUNT ============ -->
+<div id="tweaks-root"></div>
+
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="image-slot.js"></script>
+<script>
+  // icons
+  function renderIcons(){ if(window.lucide) lucide.createIcons(); }
+  renderIcons();
+  // navbar scroll shadow
+  const nav = document.getElementById('nav');
+  const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 12);
+  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+</script>
+
+<!-- React + Tweaks -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "accent": "#2E7DD1",
+  "radius": 22,
+  "headFont": "Varela Round",
+  "heroLayout": "split"
+}/*EDITMODE-END*/;
+
+function deepen(hex){
+  // returns a slightly darker variant for hover/deep
+  try{
+    const c = hex.replace('#',''); const n = parseInt(c,16);
+    let r=(n>>16)&255,g=(n>>8)&255,b=n&255;
+    r=Math.round(r*.82); g=Math.round(g*.82); b=Math.round(b*.82);
+    return '#'+[r,g,b].map(x=>x.toString(16).padStart(2,'0')).join('');
+  }catch(e){ return hex; }
+}
+
+function App(){
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  React.useEffect(()=>{
+    const r = document.documentElement.style;
+    r.setProperty('--accent', t.accent);
+    r.setProperty('--accent-deep', deepen(t.accent));
+    r.setProperty('--accent-soft', `color-mix(in srgb, ${t.accent} 12%, #fff)`);
+    r.setProperty('--radius', t.radius+'px');
+    r.setProperty('--head-font', `'${t.headFont}', sans-serif`);
+    document.body.classList.toggle('hero-centered', t.heroLayout==='centered');
+    if(window.lucide) lucide.createIcons();
+  }, [t.accent, t.radius, t.headFont, t.heroLayout]);
+
+  return (
+    <TweaksPanel>
+      <TweakSection label="Marca" />
+      <TweakColor label="Color principal" value={t.accent}
+        options={['#0891B2','#0E8A8A','#2E7DD1','#11A37F']}
+        onChange={(v)=>setTweak('accent', v)} />
+      <TweakSelect label="Fuente de titulares" value={t.headFont}
+        options={['Fredoka','Nunito','Varela Round','Baloo 2','Quicksand']}
+        onChange={(v)=>setTweak('headFont', v)} />
+      <TweakSection label="Estilo" />
+      <TweakSlider label="Redondez" value={t.radius} min={8} max={36} unit="px"
+        onChange={(v)=>setTweak('radius', v)} />
+      <TweakRadio label="Hero" value={t.heroLayout}
+        options={['split','centered']}
+        onChange={(v)=>setTweak('heroLayout', v)} />
+    </TweaksPanel>
+  );
+}
+
+// load extra fonts that the picker can reference
+const extra = document.createElement('link');
+extra.rel='stylesheet';
+extra.href='https://fonts.googleapis.com/css2?family=Varela+Round&family=Baloo+2:wght@500;600;700&family=Quicksand:wght@500;600;700&display=swap';
+document.head.appendChild(extra);
+
+ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<App/>);
+</script>
+
+<style id="heroCenteredCss">
+  body.hero-centered .hero-inner{ grid-template-columns:1fr; text-align:center; gap:40px; }
+  body.hero-centered .hero-copy{ max-width:720px; margin:0 auto; }
+  body.hero-centered .hero-copy .lead{ margin-left:auto; margin-right:auto; }
+  body.hero-centered .hero-cta, body.hero-centered .trust{ justify-content:center; }
+  body.hero-centered .hero-media{ max-width:560px; margin:0 auto; }
+</style>
+
+</body>
+</html>
