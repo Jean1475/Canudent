@@ -65,13 +65,25 @@ export default function Navbar() {
           height: 78,
         }}
       >
-        <a href="#" aria-label="Canudent inicio">
+        <a href="#" aria-label="Canudent inicio" style={{ flexShrink: 0 }}>
+          {/* wordmark on desktop, icon mark on mobile */}
           <Image
             src="/ClaudeCode/assets/wordmark-navy.png"
             alt="Canudent"
             height={34}
             width={160}
-            style={{ height: 34, width: "auto" }}
+            priority
+            className="logo-wordmark"
+            style={{ height: 34, width: "auto", display: "block" }}
+          />
+          <Image
+            src="/ClaudeCode/assets/mark-teal.png"
+            alt="Canudent"
+            height={36}
+            width={36}
+            priority
+            className="logo-mark"
+            style={{ height: 36, width: "auto", display: "none" }}
           />
         </a>
 
@@ -114,7 +126,7 @@ export default function Navbar() {
               alignItems: "center",
               gap: 9,
               fontFamily: "var(--font-head), sans-serif",
-              fontWeight: 500,
+              fontWeight: 400,
               fontSize: "1.02rem",
               padding: "14px 26px",
               borderRadius: 999,
@@ -187,6 +199,8 @@ export default function Navbar() {
           .nav-links { display: none !important; }
           .nav-phone-link { display: none !important; }
           .menu-btn-mobile { display: grid !important; }
+          .logo-wordmark { display: none !important; }
+          .logo-mark { display: block !important; }
         }
         .nav-links { display: flex; align-items: center; gap: 34px; margin-left: 8px; }
         .nav-link {

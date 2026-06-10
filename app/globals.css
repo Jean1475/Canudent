@@ -30,6 +30,15 @@
     opacity: 1;
     transform: none;
   }
+
+  /* Suppress all hover lift/transition effects */
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
 }
 
 :root {
@@ -40,7 +49,17 @@
   --ink: #0F2A3F;
   --muted: #5C7383;
   --line: #E7EEF1;
+  --star: #F5B301;
   --radius: 22px;
+
+  /* Spacing scale: 4pt base */
+  --space-xs:   4px;
+  --space-sm:   8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  48px;
+  --space-2xl: 80px;
+  --space-3xl: 96px;
 }
 
 @theme inline {
@@ -75,7 +94,7 @@ body {
 
 h1, h2, h3, h4 {
   font-family: var(--font-head), system-ui, sans-serif;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 1.08;
   margin: 0;
   letter-spacing: -0.01em;
@@ -89,4 +108,30 @@ a {
 img {
   display: block;
   max-width: 100%;
+}
+
+/* ── Responsive utilities ────────────────────────────────── */
+@media (max-width: 480px) {
+  /* Hero CTA buttons stack full-width on very small screens */
+  .hero-cta-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .hero-cta-group a {
+    justify-content: center;
+  }
+
+  /* Tighten section padding on small screens */
+  #servicios,
+  #equipo {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Footer bottom row stacks on small screens */
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
 }

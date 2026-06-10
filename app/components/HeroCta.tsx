@@ -7,7 +7,7 @@ const btnBase: React.CSSProperties = {
   alignItems: "center",
   gap: 9,
   fontFamily: "var(--font-head), sans-serif",
-  fontWeight: 500,
+  fontWeight: 400,
   fontSize: "1.08rem",
   padding: "17px 32px",
   borderRadius: 999,

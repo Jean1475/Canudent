@@ -17,9 +17,20 @@ const nunito = Nunito({
 });
 
 export const metadata: Metadata = {
-  title: "Canudent — Clínica dental",
+  title: "Canudent — Clínica dental en Madrid",
   description:
-    "Odontología moderna y cercana en Madrid. Ortodoncia invisible, implantes y estética dental con la última tecnología.",
+    "Ortodoncia invisible, implantes y estética dental en el corazón de Madrid. Primera visita gratuita. Llámanos: 910 000 000.",
+  openGraph: {
+    title: "Canudent — Clínica dental en Madrid",
+    description: "Ortodoncia invisible, implantes y estética dental. Primera visita gratuita.",
+    locale: "es_ES",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Canudent — Clínica dental en Madrid",
+    description: "Ortodoncia invisible, implantes y estética dental. Primera visita gratuita.",
+  },
 };
 
 export default function RootLayout({
